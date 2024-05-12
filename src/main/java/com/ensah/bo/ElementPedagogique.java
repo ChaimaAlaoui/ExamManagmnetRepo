@@ -1,16 +1,19 @@
 package com.ensah.bo;
 
+import java.util.List;
+import java.util.ArrayList;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class ElementPedagogique {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long IdEpd;
 	private String nomEpd;
 @ManyToOne 
@@ -21,6 +24,8 @@ private Enseignant enseignantcoordonne;
 private Niveau niveau;
 @ManyToOne
 private TypeElement typeElement;
+ @OneToMany(mappedBy="elementP",cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+ private List<Examen> Examens =new ArrayList();
 public Long getIdEpd() {
 	return IdEpd;
 }
@@ -70,7 +75,7 @@ public ElementPedagogique(Long idEpd, String nomEpd, Enseignant enseignantEnsige
 	this.typeElement = typeElement;
 }
 
-
+public ElementPedagogique () {}
 
 
 	

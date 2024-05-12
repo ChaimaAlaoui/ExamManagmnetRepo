@@ -54,4 +54,12 @@ private TypeExamen typeExamen;
 private Semestre semestre;
 @ManyToOne
 private Session session;
+@ManyToOne  
+private ElementPedagogique elementP ;
+public ElementPedagogique getElementP() {
+	return elementP;
+}
+public void setElementP(ElementPedagogique elementP) {
+	this.elementP = elementP;
+}
 }

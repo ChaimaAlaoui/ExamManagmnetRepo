@@ -28,6 +28,10 @@ public Long IdType;
 		this.titre = titre;
 	}
 
-	
+	public TypeElement (String titreT ) {
+		
+		this.titre=titreT;
+	}
+	public TypeElement ( ) {}
 
 }

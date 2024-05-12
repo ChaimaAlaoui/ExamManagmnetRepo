@@ -14,7 +14,14 @@ public class Niveau {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 public Long IdNiveau;
 public String titre;
-
+public Niveau (String _titre) {
+	
+	titre=_titre;
+}
+public Niveau () {
+	
+	
+}
 public Long getIdNiveau() {
 	return IdNiveau;
 }

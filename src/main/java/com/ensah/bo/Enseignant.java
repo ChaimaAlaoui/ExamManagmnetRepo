@@ -2,6 +2,9 @@ package com.ensah.bo;
 
 
 import java.util.List;
+
+import com.ensah.bo.ElementPedagogique;
+
 import java.util.ArrayList;
 import jakarta.persistence.*;
 
@@ -29,6 +32,10 @@ public class Enseignant extends Personnel {
 	 @ManyToOne 
 	 private Groupe groupe;
 	 
+	 @OneToMany(mappedBy = "enseignantEnsiger", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	    List<ElementPedagogique> ListeElementsEpdEnsiger=new ArrayList<>();
+	 @OneToMany(mappedBy = "enseignantcoordonne", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	    List<ElementPedagogique> ListeElementsEpdCoordonne=new ArrayList<>();
 	public String getSpecialite() {
 		return specialite;
 	}
