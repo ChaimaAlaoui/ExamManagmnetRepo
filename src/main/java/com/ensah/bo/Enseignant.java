@@ -1,22 +1,86 @@
 package com.ensah.bo;
+
+
+import java.util.List;
+import java.util.ArrayList;
 import jakarta.persistence.*;
 
+
 @Entity
-@Table(name ="Enseignant")
-public class Enseignant extends Personnel{
+@PrimaryKeyJoinColumn(name = "idEnseighant")
+public class Enseignant extends Personnel {
+
+	private String specialite;
+
+
 	
-	@ManyToOne
-    @JoinColumn(name = "groupe_id")
-    private Groupe groupe;
-	
-	 @ManyToOne
-	 @JoinColumn(name = "departement_id")
+	 
+	 @OneToMany(mappedBy = "enseignantCoordonneSurveillance", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	 List<Surveillance> listeSurveillanceCoordonne=new ArrayList<>();
+	 
+	 @ManyToMany
+		private List<Surveillance> listeSurveillanceSurveille=new ArrayList<>();
+	 
+	 @ManyToOne 
+	 private Filiere filiere;
+	 @ManyToOne 
 	 private Departement departement;
 	 
-	 @ManyToOne
-	 @JoinColumn(name = "filiere_id")
-	 private Filière filiere;
+	 @ManyToOne 
+	 private Groupe groupe;
 	 
+	public String getSpecialite() {
+		return specialite;
+	}
+
+	public void setSpecialite(String specialite) {
+		this.specialite = specialite;
+	}
+
 	
+
 	
+
+	public List<Surveillance> getListeSurveillanceCoordonne() {
+		return listeSurveillanceCoordonne;
+	}
+
+	public void setListeSurveillanceCoordonne(List<Surveillance> listeSurveillanceCoordonne) {
+		this.listeSurveillanceCoordonne = listeSurveillanceCoordonne;
+	}
+
+	public List<Surveillance> getListeSurveillanceSurveille() {
+		return listeSurveillanceSurveille;
+	}
+
+	public void setListeSurveillanceSurveille(List<Surveillance> listeSurveillanceSurveille) {
+		this.listeSurveillanceSurveille = listeSurveillanceSurveille;
+	}
+
+	public Filiere getFiliere() {
+		return filiere;
+	}
+
+	public void setFiliere(Filiere filiere) {
+		this.filiere = filiere;
+	}
+
+	public Departement getDepartement() {
+		return departement;
+	}
+
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
+	}
+
+	public Groupe getGroupe() {
+		return groupe;
+	}
+
+	public void setGroupe(Groupe groupe) {
+		this.groupe = groupe;
+	}
+
+
+
 }

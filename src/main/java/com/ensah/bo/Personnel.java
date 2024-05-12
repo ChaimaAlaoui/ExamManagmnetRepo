@@ -2,7 +2,8 @@ package com.ensah.bo;
 import jakarta.persistence.*;
 
 @MappedSuperclass
-@Table(name = "Personnel")
+
+
 public class Personnel {
 	
 	@Id
