@@ -22,10 +22,16 @@
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/enseignants}">Student Management</a>
+        <a class="nav-link" th:href="@{/enseignants}">Professor Management</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/enseignants}">Teacher Management</a>
+        <a class="nav-link" th:href="@{/enseignants}">Department Management</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/enseignants}">Groupe Management</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/enseignants}">Field Management</a>
       </li>
     </ul>
   </div>
@@ -33,20 +39,20 @@
 
 	<div class ="container">
 		<div class = "row">
-			<h1> List Enseignants </h1>
+			<h1> Professor List  </h1>
 		</div>
 		
 		<div class = "row">
 			<div class = "col-lg-3">
-				<a th:href = "@{/enseignants/new}" class = "btn btn-primary btn-sm mb-3"> Add Enseignant</a>
+				<a th:href = "@{/enseignants/new}" class = "btn btn-primary btn-sm mb-3"> Add Professor</a>
 			</div>
 		</div>
 		<table class = "table table-striped table-bordered">
 			<thead class = "table-dark">
 				<tr>
-					<th> Enseignant First Name</th>
-					<th> Enseignant Last Name</th>
-					<th> Enseignant Email </th>
+					<th> Professor First Name</th>
+					<th> Professor Last Name</th>
+					<th> Professor Email </th>
 					<th> Actions </th>
 				</tr>
 			</thead>

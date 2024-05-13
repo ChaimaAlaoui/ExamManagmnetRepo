@@ -44,22 +44,22 @@ public class EnseignantController {
 	}
 	
 	@GetMapping("/enseignants/edit/{id}")
-	public String editStudentForm(@PathVariable Long id, Model model) {
+	public String editEnseignantForm(@PathVariable Long id, Model model) {
 		model.addAttribute("enseignant", enseignantService.getEnseignantById(id));
 		return "edit_enseignants";
 	}
-
+//apres le submit btn cette methode est appelee
 	@PostMapping("/enseignants/{id}")
-	public String updateStudent(@PathVariable Long id,
-			@ModelAttribute("enseignant") Enseignant student,
+	public String updateEnseignant(@PathVariable Long id,
+			@ModelAttribute("enseignant") Enseignant enseignant,
 			Model model) {
 		
 		// get student from database by id
 		Enseignant existingEnseignant = enseignantService.getEnseignantById(id);
 		existingEnseignant.setId(id);
-		existingEnseignant.setFirstName(student.getFirstName());
-		existingEnseignant.setLastName(student.getLastName());
-		existingEnseignant.setEmail(student.getEmail());
+		existingEnseignant.setFirstName(enseignant.getFirstName());
+		existingEnseignant.setLastName(enseignant.getLastName());
+		existingEnseignant.setEmail(enseignant.getEmail());
 		
 		// save updated student object
 		enseignantService.updateEnseignant(existingEnseignant);
