@@ -29,7 +29,8 @@ public class Enseignant extends Personnel {
 	 @ManyToOne 
 	 private Departement departement;
 	 
-	 @ManyToOne 
+	
+	 @ManyToOne
 	 private Groupe groupe;
 	 
 	 @OneToMany(mappedBy = "enseignantEnsiger", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -87,7 +88,13 @@ public class Enseignant extends Personnel {
 	public void setGroupe(Groupe groupe) {
 		this.groupe = groupe;
 	}
-
+	// Méthode pour définir le nom du groupe directement depuis l'enseignant
+    public void setNomGroupe(String nomGroupe) {
+        if (this.groupe == null) {
+            this.groupe = new Groupe(); // Créer un nouvel objet Groupe si nécessaire
+        }
+        this.groupe.setNomGroupe(nomGroupe);
+    }
 
 
 }

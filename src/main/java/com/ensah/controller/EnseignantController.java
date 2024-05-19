@@ -1,18 +1,31 @@
 package com.ensah.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ensah.bo.Enseignant;
+import com.ensah.bo.Groupe;
+import com.ensah.bo.Niveau;
+import com.ensah.repository.GroupeRepository;
 import com.ensah.service.EnseignantService;
+import com.ensah.service.GroupeService;
 
 
 @Controller
 public class EnseignantController {
+	@Autowired
+	GroupeRepository groupeRepository;
+	@Autowired
+	GroupeService groupeService;
+
 	private EnseignantService enseignantService;
 
 	public EnseignantController(EnseignantService enseignantService) {
@@ -24,24 +37,30 @@ public class EnseignantController {
 	@GetMapping("/enseignants")
 	public String listEnseignants(Model model) {
 		model.addAttribute("enseignants", enseignantService.getAllEnseignants());
-		return "enseignants";
+		return "test";
 	}
 	
+
 	@GetMapping("/enseignants/new")
 	public String createEnseignantForm(Model model) {
-		
-		// create student object to hold student form data
-		Enseignant enseignant = new Enseignant();
-		model.addAttribute("enseignant", enseignant);
-		return "create_enseignant";
-		
+	    List<Groupe> groupes = groupeService.getAllGroupes();
+	    Enseignant enseignant= new Enseignant ();
+	    model.addAttribute("groupes", groupes);
+	    model.addAttribute("enseignant", enseignant);
+	    return "create_enseignant";
 	}
 	
 	@PostMapping("/enseignants")
-	public String saveEnseignant(@ModelAttribute("enseignant") Enseignant enseignant) {
-		enseignantService.saveEnseignant(enseignant);
-		return "redirect:/enseignants";
+	public String saveEnseignant(@ModelAttribute("enseignant") Enseignant enseignant, @RequestParam("idGroupe") Long idGroupe) {
+	    Groupe groupe = groupeService.getGroupeById(idGroupe);
+	    enseignant.setGroupe(groupe);
+
+	    enseignantService.saveEnseignant(enseignant);
+
+	    return "redirect:/enseignants";
 	}
+
+
 	
 	@GetMapping("/enseignants/edit/{id}")
 	public String editEnseignantForm(@PathVariable Long id, Model model) {

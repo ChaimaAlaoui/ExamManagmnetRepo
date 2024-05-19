@@ -9,72 +9,100 @@
 	crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <!-- Brand -->
-  <a class="navbar-brand" href="#">Professor Management System</a>
-
-  <!-- Toggler/collapsibe Button -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <!-- Navbar links -->
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/enseignants}">Professor Management</a>
-      </li>
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar scroll</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Link
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
   </div>
 </nav>
 <br>
 <br>
-	<div class = "container">
-		<div class = "row">
-			<div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-				<h1 class = "text-center"> Create New Professor </h1>
-				<div class = "card-body">
-					<form th:action="@{/enseignants}" th:object = "${enseignant}" method="POST">
-						<div class ="form-group">
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center"> Create New Professor </h1>
+				<div class="card-body">
+					<form th:action="@{/enseignants}" th:object="${enseignant}" method="POST">
+						<div class="form-group">
 							<label> Professor First Name </label>
 							<input
-							type = "text"
-							name = "firstName"
-							th:field = "*{firstName}"
-							class = "form-control"
+							type="text"
+							name="firstName"
+							th:field="*{firstName}"
+							class="form-control"
 							placeholder="Enter Professor First Name" 
 							/>
 						</div>
 						
-						<div class ="form-group">
+						<div class="form-group">
 							<label> Professor Last Name </label>
 							<input
-							type = "text"
-							name = "lastName"
-							th:field = "*{lastName}"
-							class = "form-control"
+							type="text"
+							name="lastName"
+							th:field="*{lastName}"
+							class="form-control"
 							placeholder="Enter Professor Last Name" 
 							/>
 						</div>
 						
-						<div class ="form-group">
+						<div class="form-group">
 							<label> Professor Email </label>
 							<input
-							type = "text"
-							name = "email"
-							th:field = "*{email}"
-							class = "form-control"
+							type="text"
+							name="email"
+							th:field="*{email}"
+							class="form-control"
 							placeholder="Enter Professor Email" 
 							/>
 						</div>
 						
-						<div class = "box-footer">
-							<button type="submit" class = "btn btn-primary">
-								Submit
-							</button>
+						<div class="mb-3">
+						    <label for="exampleSelect" class="form-label">Choisissez le groupe :</label>
+						    <select id="exampleSelect" class="form-select form-control" aria-label="Default select example"  name="idGroupe">
+						        <!-- Utilisez les informations des groupes au lieu des niveaux -->
+						        <option th:each="groupe : ${groupes}" th:value="${groupe.IdGroupe}" th:text="${groupe.nomGroupe}"></option>
+						    </select>
 						</div>
+						
+						
+						<input type="hidden" th:field="*{groupe.IdGroupe}" />
+						
+						<div class="mb-3 d-flex justify-content-around">
+  							<a href="/enseignants" class="btn btn-secondary" style="width:48%">Back</a>
+  							<button type="submit" class="btn btn-primary" style="width:48%">Submit</button>
+  						</div>
 					</form>
-				
 				</div>
 			</div>
 		</div>

@@ -10,6 +10,15 @@ import jakarta.persistence.OneToMany;
 import java.util.*;
 @Entity
 public class Groupe {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long IdGroupe;
+	private String nomGroupe ;
+	//we find many prof in one grp
+	@OneToMany(mappedBy = "groupe", cascade = { CascadeType.PERSIST, CascadeType.MERGE }) 
+	private List<Enseignant> ListeEnseignants =new ArrayList();
+	
+	
 	public Long getIdGroupe() {
 		return IdGroupe;
 	}
@@ -28,10 +37,5 @@ public class Groupe {
 	public void setListeEnseignants(List<Enseignant> listeEnseignants) {
 		ListeEnseignants = listeEnseignants;
 	}
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long IdGroupe;
-	private String nomGroupe ;
-	@OneToMany(mappedBy = "groupe", cascade = { CascadeType.PERSIST, CascadeType.MERGE }) 
-	private List<Enseignant> ListeEnseignants =new ArrayList();
+	
 }
