@@ -14,6 +14,7 @@ public class Filiere {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long IdFiliere;
+	private String nomFiliere ; 
 	public Long getIdFiliere() {
 		return IdFiliere;
 	}
@@ -38,7 +39,7 @@ private Long IdFiliere;
 		ListeEnseignants = listeEnseignants;
 	}
 
-	private String nomFiliere ; 
+	
 	
 	@OneToMany(mappedBy = "filiere", cascade = { CascadeType.PERSIST, CascadeType.MERGE }) 
  

@@ -86,6 +86,39 @@
 							/>
 						</div>
 						
+						<div class="mb-3">
+						    <label for="exampleSelect" class="form-label">Choisissez le groupe :</label>
+						    <select id="exampleSelect" class="form-select form-control" aria-label="Default select example"  name="idGroupe">
+						        <!-- Utilisez les informations des groupes au lieu des niveaux -->
+						        <option th:each="groupe : ${groupes}" th:value="${groupe.IdGroupe}" th:text="${groupe.nomGroupe}"></option>
+						    </select>
+						</div>
+						
+						<div class="mb-3">
+						    <label for="exampleSelect" class="form-label">Choisissez le Departemnet :</label>
+						    <select id="exampleSelect" class="form-select form-control" aria-label="Default select example"  name="idDepartement">
+						        <option th:each="department : ${departments}" th:value="${department.IdDepartement}" th:text="${department.nomDepartement}"></option>
+						    </select>
+						</div>
+						
+						<div class="mb-3">
+						    <label for="exampleSelect" class="form-label">Choisissez la Filiere :</label>
+						    <select id="exampleSelect" class="form-select form-control" aria-label="Default select example"  name="idFiliere">
+						        <option th:each="filiere : ${filieres}" th:value="${filiere.IdFiliere}" th:text="${filiere.nomFiliere}"></option>
+						    </select>
+						</div>
+						
+						<div class="mb-3">
+						    <label for="exampleSelect" class="form-label">Choisissez le EP :</label>
+						    <select id="exampleSelect" class="form-select form-control" aria-label="Default select example"  name="idEP">
+						        <!-- Utilisez les informations des groupes au lieu des niveaux -->
+						        <option th:each="EP : ${EPs}" th:value="EP" th:text="${EP.nomEpd}"></option>
+						    </select>
+						</div>
+						
+						
+						
+						
 						<div class="mb-3 d-flex justify-content-around">
   <a href="/enseignants" class="btn btn-secondary" style="width:48%">Back</a>
   <button type="submit" class="btn btn-primary" style="width:48%">Submit</button>

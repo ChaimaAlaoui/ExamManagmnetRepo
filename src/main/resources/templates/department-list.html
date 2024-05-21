@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Group List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,47 +43,29 @@
   </div>
 </nav>
 
-<div class="container w-75 d-flex justify-content-center align-items-center" style="height:500px">
-  <div class="d-flex flex-column w-100">
-    <div class="d-flex justify-content-between w-100 mb-3">
-      <p class="fw-bolder fs-5">Liste</p>
-      <a class="btn btn-primary" href="/enseignants/new" style="width:120px">Add </a>
-    </div>
+<div class="container w-75 d-flex justify-content-center align-items-center" style=" height :500px">
+<div  class=" d-flex  flex-column w-75 ">
+<div class="d-flex justify-content-between w-100 mb-3 "><p class="fw-bolder fs-5">List  </p><a  class="btn btn-primary " style="width:120px" href="/departments/add">Add </a></div>
     <table class="table">
-    <thead>
-        <tr>
-            <th scope="col"> First Name</th>
-            <th scope="col"> Last Name</th>
-            <th scope="col"> Email</th>
-            <th scope="col"> Group</th>
-            <th scope="col">department</th>
-            <th scope="col"> field</th>
-            <th scope="col">Action</th> <!-- Nouvelle colonne pour les actions -->
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="enseignant : ${enseignants}">
-            <td th:text="${enseignant.firstName}"></td>
-            <td th:text="${enseignant.lastName}"></td>
-            <td th:text="${enseignant.email}"></td>
-<td th:text="${enseignant?.groupe?.nomGroupe}"></td>
-<td th:text="${enseignant?.departement?.nomDepartement}"></td>
-
-            <td th:text="${enseignant?.filiere?.nomFiliere}"></td>
-             
-            
-            <!-- Colonne pour les boutons d'action -->
-            <td>
-                <div class="d-flex justify-content-around">
-                    <a th:href="@{/enseignants/edit/{id}(id=${enseignant.id})}" class="btn btn-primary">Update</a>
-                    <a th:href="@{/enseignants/{id}(id=${enseignant.id})}" class="btn btn-danger">Delete</a>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-  </div>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="department : ${departments}">
+                <td th:text="${department.IdDepartement}"></td>
+                <td th:text="${department.nomDepartement}"></td>
+                <td>
+                    <a th:href="@{/departments/edit/{id}(id=${department.IdDepartement})}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{/departments/delete/{id}(id=${department.IdDepartement})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

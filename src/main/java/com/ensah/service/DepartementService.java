@@ -4,16 +4,18 @@ import java.util.List;
 
 import com.ensah.bo.Departement;
 
+
+
 public interface DepartementService {
 	
-	 List<Departement> getAllDepartements();
-		
-	 Departement saveGroupe(Departement departement);
+	List<Departement> getAllDepartements();
 	
-	 Departement getDepartementById(Long id);
- 	
-	 Departement updateDepartement(Departement departement);
+	Departement getDepartementById(Long id);
 	
-	 void deleteDepartementById(Long id);
-
+	Departement saveDepartment(Departement departement);
+	
+	Departement updateDepartement(Departement departement);
+	
+	void deleteDepartementById(Long id);
 }
+

@@ -13,11 +13,7 @@ import jakarta.persistence.*;
 @PrimaryKeyJoinColumn(name = "idEnseighant")
 public class Enseignant extends Personnel {
 
-	private String specialite;
-
-
-	
-	 
+	 private String specialite;
 	 @OneToMany(mappedBy = "enseignantCoordonneSurveillance", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	 List<Surveillance> listeSurveillanceCoordonne=new ArrayList<>();
 	 
@@ -32,11 +28,13 @@ public class Enseignant extends Personnel {
 	
 	 @ManyToOne
 	 private Groupe groupe;
-	 
-	 @OneToMany(mappedBy = "enseignantEnsiger", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	
+	  @OneToMany(mappedBy = "enseignantEnsiger", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	    List<ElementPedagogique> ListeElementsEpdEnsiger=new ArrayList<>();
+	  
 	 @OneToMany(mappedBy = "enseignantcoordonne", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	    List<ElementPedagogique> ListeElementsEpdCoordonne=new ArrayList<>();
+	 
 	public String getSpecialite() {
 		return specialite;
 	}
@@ -44,10 +42,6 @@ public class Enseignant extends Personnel {
 	public void setSpecialite(String specialite) {
 		this.specialite = specialite;
 	}
-
-	
-
-	
 
 	public List<Surveillance> getListeSurveillanceCoordonne() {
 		return listeSurveillanceCoordonne;

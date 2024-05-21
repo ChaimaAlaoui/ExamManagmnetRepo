@@ -10,6 +10,16 @@ import jakarta.persistence.OneToMany;
 import java.util.*;
 @Entity
 public class Departement {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long IdDepartement;
+	private String nomDepartement ;
+	
+	@OneToMany(mappedBy = "departement", cascade = { CascadeType.PERSIST, CascadeType.MERGE }) 
+	private List<Enseignant> ListeEnseignants =new ArrayList();
+	
+	
+	
 	public Long getIdDepartement() {
 		return IdDepartement;
 	}
@@ -28,10 +38,5 @@ public class Departement {
 	public void setListeEnseignants(List<Enseignant> listeEnseignants) {
 		ListeEnseignants = listeEnseignants;
 	}
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long IdDepartement;
-	private String nomDepartement ;
-	@OneToMany(mappedBy = "departement", cascade = { CascadeType.PERSIST, CascadeType.MERGE }) 
-	private List<Enseignant> ListeEnseignants =new ArrayList();
+	
 }
