@@ -17,6 +17,7 @@ private Long IdSalle;
 	private Long Capacite ;
 	@OneToMany(mappedBy = "salle", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Surveillance> ListeSurveillances= new ArrayList<>();
+	public Salle() {}
 	public Long getIdSalle() {
 		return IdSalle;
 	}

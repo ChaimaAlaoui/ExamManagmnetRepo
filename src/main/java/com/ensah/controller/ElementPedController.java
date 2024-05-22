@@ -16,25 +16,28 @@ import com.ensah.bo.Enseignant;
 import com.ensah.bo.Niveau;
 import com.ensah.bo.TypeElement;
 import com.ensah.repository.TypeElementRepository;
+import com.ensah.service.impl.ElementServiceImpl;
+import com.ensah.service.impl.EnseignantServiceImpl;
+
 import com.ensah.repository.ElementspRepository;
 import com.ensah.repository.NiveauRepository;
-import com.ensah.repository.EnseignantRepository;
+
 
 @Controller
 public class ElementPedController {
 	@Autowired
-	 private ElementspRepository ElementspRepository;
+	 private ElementServiceImpl elementServiceImpl;
 	@Autowired
 	 private TypeElementRepository TypeElementRepository;
 	@Autowired
 	 private NiveauRepository NiveauRepository;
 	@Autowired
-	 private EnseignantRepository EnseignantRepository;
+	 private EnseignantServiceImpl EnseignantServiceImpl;
 	
 	@GetMapping("/ElementsPedagogique")
 	public String listEnseignants(Model model,@RequestParam(defaultValue = "0") int page) {
 		int pageSize = 5;
-	    Page<ElementPedagogique> elementPedagogique = ElementspRepository.findAll(PageRequest.of(page, pageSize));
+	    Page<ElementPedagogique> elementPedagogique = elementServiceImpl.findByPage(PageRequest.of(page, pageSize));
 		model.addAttribute("elementPedagogique",elementPedagogique);
 		return "ElementsPedagogique";
 	}
@@ -42,7 +45,7 @@ public class ElementPedController {
 	public String AddElement(Model model) {
 		List<Niveau> Niveaux=NiveauRepository.findAll();
 		List<TypeElement> TypeElements=TypeElementRepository.findAll();
-		List<Enseignant> Enseignants=EnseignantRepository.findAll();
+		List<Enseignant> Enseignants=EnseignantServiceImpl.getAllEnseignants();
 		model.addAttribute("Enseignants",Enseignants);
 		model.addAttribute("Niveaux",Niveaux);
 		model.addAttribute("TypeElements",TypeElements);
@@ -50,8 +53,8 @@ public class ElementPedController {
 	}
 	@PostMapping("/AddElementSubmit")
 	public String AddElementSubmit(String titre,Long IdType,Long IdNiveau,Long IdCoord,Long IdEns) {
-		Enseignant enseignant = EnseignantRepository.findById(IdEns).orElseThrow();
-		Enseignant coordinateur = EnseignantRepository.findById(IdCoord).orElseThrow();
+		Enseignant enseignant = EnseignantServiceImpl.getEnseignantById(IdEns);
+		Enseignant coordinateur = EnseignantServiceImpl.getEnseignantById(IdCoord);
 		Niveau niveau = NiveauRepository.findById(IdNiveau).orElseThrow();
 		TypeElement typeElement =TypeElementRepository.findById(IdType).orElseThrow();
 		ElementPedagogique element = new ElementPedagogique();
@@ -60,40 +63,39 @@ public class ElementPedController {
 		element.setNiveau(niveau);
 		element.setTypeElement(typeElement);
 		element.setNomEpd(titre);
-		ElementspRepository.save(element);
+		elementServiceImpl.saveElement(element);
 		return "redirect:/ElementsPedagogique";
 	}
 	
 	@PostMapping("/DeleteElement")
 	public String DeleteType (Long IdEpd) {
-		System.out.print(IdEpd);
-		ElementPedagogique e =	ElementspRepository.findById(IdEpd).orElseThrow();
-		ElementspRepository.delete(e);
+		
+		elementServiceImpl.deleteElementById(IdEpd);
 		
 		return "redirect:/ElementsPedagogique";
 	}
 	@PostMapping("/UpdateElementSubmit")
 	public String UpdateElementSubmit (Long IdEpd ,String titre,Long IdType,Long IdNiveau,Long IdCoord,Long IdEns) {
-		ElementPedagogique element =ElementspRepository.findById(IdEpd).orElseThrow();
-		element.setEnseignantEnsiger(EnseignantRepository.findById(IdEns).orElseThrow());
-element.setEnseignantcoordonne(EnseignantRepository.findById(IdCoord).orElseThrow());
+		ElementPedagogique element =elementServiceImpl.getElementById(IdEpd);
+		element.setEnseignantEnsiger(EnseignantServiceImpl.getEnseignantById(IdEns));
+element.setEnseignantcoordonne(EnseignantServiceImpl.getEnseignantById(IdCoord));
 element.setNiveau(NiveauRepository.findById(IdNiveau).orElseThrow());
 element.setTypeElement(TypeElementRepository.findById(IdType).orElseThrow());
 element.setNomEpd(titre);
 System.out.print(element.getIdEpd());
-		ElementspRepository.save(element);
+elementServiceImpl.saveElement(element);
 		
 	
 return "redirect:/ElementsPedagogique";
 	}
 	@PostMapping("/UpdateElement")
 	public String UpdateElement (Model model ,Long IdEpd) {
-		ElementPedagogique e =	ElementspRepository.findById(IdEpd).orElseThrow();
+		ElementPedagogique e =	elementServiceImpl.getElementById(IdEpd);
 model.addAttribute("ElementPedagogique",e);
 		
 List<Niveau> Niveaux=NiveauRepository.findAll();
 List<TypeElement> TypeElements=TypeElementRepository.findAll();
-List<Enseignant> Enseignants=EnseignantRepository.findAll();
+List<Enseignant> Enseignants=EnseignantServiceImpl.getAllEnseignants();
 model.addAttribute("Enseignants",Enseignants);
 model.addAttribute("Niveaux",Niveaux);
 model.addAttribute("TypeElements",TypeElements);

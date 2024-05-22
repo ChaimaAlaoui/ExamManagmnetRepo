@@ -1,6 +1,7 @@
 package com.ensah.bo;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -23,6 +24,24 @@ public class Examen {
 	}
 	public void setListeSurveillance(List<Surveillance> listeSurveillance) {
 		ListeSurveillance = listeSurveillance;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public int getDurationMinutes() {
+		return durationMinutes;
+	}
+	public void setDurationMinutes(int durationMinutes) {
+		this.durationMinutes = durationMinutes;
+	}
+	public int getRealDurationMinutes() {
+		return realDurationMinutes;
+	}
+	public void setRealDurationMinutes(int realDurationMinutes) {
+		this.realDurationMinutes = realDurationMinutes;
 	}
 	public TypeExamen getTypeExamen() {
 		return typeExamen;
@@ -56,6 +75,9 @@ private Semestre semestre;
 private Session session;
 @ManyToOne  
 private ElementPedagogique elementP ;
+private Date date;
+private int durationMinutes;
+private int realDurationMinutes;
 public ElementPedagogique getElementP() {
 	return elementP;
 }
