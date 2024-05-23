@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -23,7 +24,9 @@
 
     <div class="d-flex justify-content-around align-items-center text-center">
         <p class="m-4" style="font-weight: bold;">Add Examen</p>
+     
     </div>
+    <div style="color:red; text-algin:centre"><p th:text="${error}"></p></div>
 <div class="container">
     <form action="SubmitExam" method="post">
         <div class="row mb-3">
@@ -37,7 +40,7 @@
         <div class="row mb-3">
         <div class="col">
           <label for="exampleSelect" class="form-label"> Element pedagogique :</label>
-  <select id="exampleSelect" class="form-select" aria-label="Default select example" name="elements" >
+  <select id="exampleSelect" class="form-select" aria-label="Default select example" name="elementPed" >
         <option th:each="e : ${listeModules}" th:value="${e.IdEpd}" th:text="${e.nomEpd}" ></option>
 
   </select>
@@ -85,9 +88,9 @@
             <!-- Replace 8 with the number of rooms you want to display per row -->
             <div th:if="${iterStat.index >= (row - 1) * 7} and ${iterStat.index < row * 7}" class="card" style="width: 130px;height: 130px;">
                 <div onclick="handleCardClick(this)" class="card-body">
-                    <h6 th:text="'Salle : ' + ${salle.nomSalle}" class="card-title"></h6>
+                    <h6 th:text="' Salle  :  ' + ${salle.nomSalle}" class="card-title"></h6>
                     <p th:text="'Capacite : ' + ${salle.Capacite}" style="font-size:13px"></p>
-                    <input type="checkbox" th:id="'checkbox' + ${salle.IdSalle}" th:name="salles" th:value="${'Salle ' + salle.IdSalle + '-' + (row * iterStat.index)}" hidden>
+                    <input type="checkbox" th:id="'checkbox' + ${salle.IdSalle}" name="salles" th:value="${salle.IdSalle + '-' + (row * iterStat.index)}" hidden>
                     <input type="number" th:id="'serv' + ${salle.IdSalle}" class="form-control NBR" placeholder="Number" name="teacherCount" style="width: 80px; height: 20px;">
                 </div>
             </div>
@@ -184,6 +187,7 @@ function handleCardClick(card) {
 	        return; 
 	    }
     var checkbox = card.querySelector('input[type="checkbox"]');
+   
     if (checkbox) {
     	if(!checkbox.checked){
     		

@@ -37,6 +37,9 @@ private Long IdSurveillance;
 	public List<Enseignant> getEnseignantSurveillanceList() {
 		return enseignantSurveillanceList;
 	}
+	public void addEnseignant(Enseignant ens) {
+		enseignantSurveillanceList.add(ens);
+	}
 	public void setEnseignantSurveillanceList(List<Enseignant> enseignantSurveillanceList) {
 		this.enseignantSurveillanceList = enseignantSurveillanceList;
 	}
