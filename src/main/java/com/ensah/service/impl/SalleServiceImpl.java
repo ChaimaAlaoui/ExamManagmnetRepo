@@ -20,4 +20,9 @@ public List<Salle> getAllSalle() {
 	return salleRepository.findAll();
 }
 
+@Override
+public Salle getSalleById(Long id) {
+	return salleRepository.findById(id).get() ;
+}
+
 }

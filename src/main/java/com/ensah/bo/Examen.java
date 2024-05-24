@@ -13,6 +13,13 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Examen {
+	private String  titreExamen;
+	public String getTitreExamen() {
+		return titreExamen;
+	}
+	public void setTitreExamen(String titreExamen) {
+		this.titreExamen = titreExamen;
+	}
 	public Long getIdExamen() {
 		return IdExamen;
 	}
@@ -76,6 +83,13 @@ private Session session;
 @ManyToOne  
 private ElementPedagogique elementP ;
 private Date date;
+private String heur;
+public String getHeur() {
+	return heur;
+}
+public void setHeur(String heur) {
+	this.heur = heur;
+}
 private int durationMinutes;
 private int realDurationMinutes;
 public ElementPedagogique getElementP() {

@@ -17,11 +17,11 @@ public class Enseignant extends Personnel {
 
 
 	
-	 
+
 	 @OneToMany(mappedBy = "enseignantCoordonneSurveillance", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	 List<Surveillance> listeSurveillanceCoordonne=new ArrayList<>();
 	 
-	 @ManyToMany
+	 @ManyToMany(mappedBy = "enseignantSurveillanceList")
 		private List<Surveillance> listeSurveillanceSurveille=new ArrayList<>();
 	 
 	 @ManyToOne 
