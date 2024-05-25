@@ -12,104 +12,32 @@
     <p class="m-4 " style="font-weight: bold;">Liste des examens</p>
     <a class="btn btn-primary"  href="/AddExamen">Add Examen</a>
 </div>
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="card text-center mb-4">
-        <div class="card-header">
-          Featured
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-body-secondary">
-          2 days ago
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="card text-center mb-4">
-        <div class="card-header">
-          Featured
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-body-secondary">
-          2 days ago
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="card text-center mb-4">
-        <div class="card-header">
-          Featured
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-body-secondary">
-          2 days ago
-        </div>
-      </div>
-    </div>
-  </div>
+ <div class="container">
     <div class="row">
-    <div class="col-sm-4">
-      <div class="card text-center mb-4">
-        <div class="card-header">
-          Featured
+        <div th:each="card, stat : ${ListeExamen}" class="col-sm-4">
+            <!-- Start a new row every 3 cards -->
+            <div th:if="${stat.index % 3 == 0}" class="row "></div>
+            
+            <div class="col">
+                <div class="card text-center mb-4">
+                    <div class="card-header" th:text="${card.session.nomSession}"></div>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${card.titreExamen}">Special title treatment</h5>
+                        <p class="card-text" ><b>Semestre: </b><span th:text="${card.semestre.nomSemestre}"></span></p>
+                        <p class="card-text" ><b>Type Element: </b><span th:text="${card.typeExamen.titre}"></span></p> 
+                        <p class="card-text" ><b>Element Pedagogique: </b><span th:text="${card.elementP.nomEpd}"></span></p> 
+                        
+                        <a class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer text-body-secondary"  th:text="'Date: ' +${#dates.format(card.date, 'yyyy-MM-dd')} + ', Heure: ' + ${card.heur}">2 days ago</div>
+                </div>
+            </div>
+            
+            <!-- Close the row after 3 cards or at the last card -->
+            <div th:if="${stat.index % 3 == 2 || stat.last}" class="row "></div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-body-secondary">
-          2 days ago
-        </div>
-      </div>
     </div>
-    <div class="col-sm-4">
-      <div class="card text-center mb-4">
-        <div class="card-header">
-          Featured
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-body-secondary">
-          2 days ago
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="card text-center mb-4">
-        <div class="card-header">
-          Featured
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-body-secondary">
-          2 days ago
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
-
-       
    <div th:include="fragments/footer :: footer"></div>
         
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

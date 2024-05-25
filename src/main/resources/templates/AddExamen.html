@@ -35,7 +35,13 @@
         
                 <input id="Title-input" type="text" class="form-control" placeholder="Title " name="NomExamen">
             </div>
-            
+            <div class="col">
+          <label for="exampleSelect" class="form-label"> Type Element  :</label>
+  <select id="exampleSelect" class="form-select" aria-label="Default select example" name="TypeExamen" >
+        <option th:each="e : ${listeTypeExamen}" th:value="${e.IdTypeExamen}" th:text="${e.titre}" ></option>
+
+  </select>
+            </div>
         </div>
         <div class="row mb-3">
         <div class="col">
