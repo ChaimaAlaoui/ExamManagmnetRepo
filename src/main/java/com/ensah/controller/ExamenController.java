@@ -28,6 +28,7 @@ import com.ensah.service.SalleService;
 import com.ensah.service.SemestreService;
 import com.ensah.service.SessionService;
 import com.ensah.service.SurveillanceService;
+import com.ensah.service.TypeExamenService;
 import com.ensah.service.impl.ElementServiceImpl;
 
 @Controller 
@@ -45,10 +46,13 @@ public class ExamenController {
 	@Autowired
 	 private EnseignantService EnseignantServiceImpl;
 	@Autowired
+	 private TypeExamenService TypeExamenImpl;
+	@Autowired
 private SalleService salleService;
 	@GetMapping("/ListeExamens")
-	public String  ListeExamens () {
-		
+	public String  ListeExamens (Model model) {
+		model.addAttribute("ListeExamen",examenService.getAllExamen());
+
 		return "ListeExamens";
 	}
 	@GetMapping("/AddExamen")
@@ -57,10 +61,11 @@ private SalleService salleService;
 		model.addAttribute("listeSalles",salleService.getAllSalle());
 		model.addAttribute("listeSession",sessionServiceimpl.getAllSession());
 		model.addAttribute("listeSemestre",semestreService.getAllSemestre());
+		model.addAttribute("listeTypeExamen",TypeExamenImpl.getAllTypeExamen());
 		return "AddExamen";
 	}
 	@PostMapping("/SubmitExam")
-	public String  SubmitExam (@RequestParam List<String>teacherCount,@RequestParam(name = "salles", required = false) List<String>salles,@RequestParam String NomExamen,@RequestParam String elementPed,@RequestParam String session,@RequestParam String method,@RequestParam String  DateExam,@RequestParam String  HeurExam,@RequestParam String  DureeExam,@RequestParam String rapport,@RequestParam String semestre,RedirectAttributes redirectAttributes) {
+	public String  SubmitExam (@RequestParam List<String>teacherCount,@RequestParam(name = "salles", required = false) List<String>salles,@RequestParam String NomExamen,@RequestParam String elementPed,@RequestParam String session,@RequestParam String method,@RequestParam String  DateExam,@RequestParam String  HeurExam,@RequestParam String  DureeExam,@RequestParam String rapport,@RequestParam String semestre,@RequestParam String TypeExamen,RedirectAttributes redirectAttributes) {
 		if(salles==null) {redirectAttributes.addFlashAttribute("error", "Veuillez choisir une salle.");
     	
    	 return "redirect:/AddExamen";}
@@ -97,8 +102,8 @@ s.setEnseignantSurveillanceList(listEnseignantSurveillance);
        	s.setEnseignantCoordonneSurveillance((ListeEnseignants.get(index)));
        	ListeEnseignants.remove(index);
 	       
-	       Surveillance m=    SurveillanceServiceImpl.saveSurveillance(s);
-	       listeSurveillance.add(m);
+        s.setExamen(exam);
+	       listeSurveillance.add(s);
 	        System.out.println("surv"+i+"liste :"+s.getEnseignantSurveillanceList());    
 			
 		}
@@ -109,7 +114,7 @@ s.setEnseignantSurveillanceList(listEnseignantSurveillance);
 		Long elementSession = Long.valueOf(Integer.parseInt(session)); 
 		exam.setSession(sessionServiceimpl.getSessionById(elementSession));
 		exam.setHeur(HeurExam);
-		  SimpleDateFormat dateFormat = new SimpleDateFormat("dd-yyyy-MM");
+		  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		    try {
 		        Date parsedDate = dateFormat.parse(DateExam);
 		        exam.setDate(parsedDate);
@@ -120,7 +125,11 @@ s.setEnseignantSurveillanceList(listEnseignantSurveillance);
 		    }
 		exam.setDurationMinutes(Integer.parseInt(DureeExam));
 		exam.setRealDurationMinutes(Integer.parseInt(DureeExam));
-		Long elementsemestre = Long.valueOf(Integer.parseInt(semestre)); 
+		Long elementsemestre = Long.valueOf(Integer.parseInt(semestre));
+		
+		Long TypeExamenId = Long.valueOf(Integer.parseInt(TypeExamen));
+		exam.setTypeExamen(TypeExamenImpl.getTypeExamenById(TypeExamenId));
+
 		exam.setSemestre(semestreService.getSemestreById(elementsemestre));
 		exam.setListeSurveillance(listeSurveillance);
 		examenService.saveExamen(exam);
