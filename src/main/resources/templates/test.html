@@ -58,6 +58,8 @@
             <th scope="col"> Group</th>
             <th scope="col">department</th>
             <th scope="col"> field</th>
+            <th scope="col"> Pedagogical Element</th>
+            
             <th scope="col">Action</th> <!-- Nouvelle colonne pour les actions -->
         </tr>
     </thead>
@@ -70,6 +72,12 @@
 <td th:text="${enseignant?.departement?.nomDepartement}"></td>
 
             <td th:text="${enseignant?.filiere?.nomFiliere}"></td>
+            
+             <td>
+                <div class="d-flex justify-content-around">
+                    <a th:href="@{/enseignants/display/{id}(id=${enseignant.id})}" class="btn btn-success">Display</a>
+                </div>
+            </td>
              
             
             <!-- Colonne pour les boutons d'action -->

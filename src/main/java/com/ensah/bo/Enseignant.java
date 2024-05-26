@@ -13,11 +13,15 @@ import jakarta.persistence.*;
 @PrimaryKeyJoinColumn(name = "idEnseighant")
 public class Enseignant extends Personnel {
 
-	 private String specialite;
+	private String specialite;
+
+
+	
+
 	 @OneToMany(mappedBy = "enseignantCoordonneSurveillance", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	 List<Surveillance> listeSurveillanceCoordonne=new ArrayList<>();
 	 
-	 @ManyToMany
+	 @ManyToMany(mappedBy = "enseignantSurveillanceList")
 		private List<Surveillance> listeSurveillanceSurveille=new ArrayList<>();
 	 
 	 @ManyToOne 
@@ -25,16 +29,13 @@ public class Enseignant extends Personnel {
 	 @ManyToOne 
 	 private Departement departement;
 	 
-	
-	 @ManyToOne
+	 @ManyToOne 
 	 private Groupe groupe;
-	
-	  @OneToMany(mappedBy = "enseignantEnsiger", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	 
+	 @OneToMany(mappedBy = "enseignantEnsiger", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	    List<ElementPedagogique> ListeElementsEpdEnsiger=new ArrayList<>();
-	  
 	 @OneToMany(mappedBy = "enseignantcoordonne", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	    List<ElementPedagogique> ListeElementsEpdCoordonne=new ArrayList<>();
-	 
 	public String getSpecialite() {
 		return specialite;
 	}
@@ -42,6 +43,10 @@ public class Enseignant extends Personnel {
 	public void setSpecialite(String specialite) {
 		this.specialite = specialite;
 	}
+
+	
+
+	
 
 	public List<Surveillance> getListeSurveillanceCoordonne() {
 		return listeSurveillanceCoordonne;
@@ -82,13 +87,7 @@ public class Enseignant extends Personnel {
 	public void setGroupe(Groupe groupe) {
 		this.groupe = groupe;
 	}
-	// Méthode pour définir le nom du groupe directement depuis l'enseignant
-    public void setNomGroupe(String nomGroupe) {
-        if (this.groupe == null) {
-            this.groupe = new Groupe(); // Créer un nouvel objet Groupe si nécessaire
-        }
-        this.groupe.setNomGroupe(nomGroupe);
-    }
+
 
 
 }

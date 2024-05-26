@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ensah.bo.Departement;
+import com.ensah.bo.ElementPedagogique;
 import com.ensah.bo.Enseignant;
 import com.ensah.bo.Filiere;
 import com.ensah.bo.Groupe;
 import com.ensah.bo.Niveau;
 import com.ensah.repository.GroupeRepository;
 import com.ensah.service.DepartementService;
+import com.ensah.service.ElementService;
 import com.ensah.service.EnseignantService;
 import com.ensah.service.FiliereService;
 import com.ensah.service.GroupeService;
@@ -33,6 +35,9 @@ public class EnseignantController {
 	DepartementService departmentService;
 	@Autowired
 	FiliereService filiereService;
+	
+	@Autowired
+    private  ElementService pedagogicalElementService;
 
 	private EnseignantService enseignantService;
 
@@ -143,6 +148,21 @@ public class EnseignantController {
 		enseignantService.deleteEnseignantById(id);
 		return "redirect:/enseignants";
 	}
+	
+	
+	// Display pedagogical elements of a specific teacher
+    @GetMapping("/enseignants/display/{id}")
+    public String displayPedagogicalElements(@PathVariable Long id, Model model) {
+        // Fetch the teacher by ID
+        Enseignant enseignant = enseignantService.getEnseignantById(id);
+        // Fetch pedagogical elements associated with the teacher
+        List<ElementPedagogique> pedagogicalElements = pedagogicalElementService.findByEnseignantId(id);
+        // Add to model
+        model.addAttribute("enseignant", enseignant);
+        model.addAttribute("pedagogicalElements", pedagogicalElements);
+        return "display";
+    }
+
 	
 
 }

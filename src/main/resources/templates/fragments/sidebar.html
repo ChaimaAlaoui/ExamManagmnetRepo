@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+</head>
+<body>
+<div id="sidebar" class='active' th:fragment="sidebar"><!--sidebar-->
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header">
+<!--<img src="/images/logo.png" alt="Logo" style="width: 50px; height: auto;">  -->
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class='sidebar-title'>Main Menu</li>
+                 <li class="sidebar-item active ">
+                    <a href="#" class='sidebar-link'>
+                        <i data-feather="home" width="20"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                </li>
+
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="fas fa-chalkboard-teacher" width="20"></i>
+                        <span>Professors</span>
+                    </a>
+
+                    <ul class="submenu ">
+
+                        <li>
+                            <a th:href="@{/enseignants}">Manage professors</a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+
+
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="fas fa-briefcase" width="20"></i>
+                        <span>Groups</span>
+                    </a>
+
+                    <ul class="submenu ">
+
+                        <li>
+                     <a th:href="@{/groupes}">Manage groups</a>
+
+                        </li>
+
+
+                    </ul>
+
+                </li>
+
+
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="fas fa-building" width="20"></i>
+                        <span>Departments</span>
+                    </a>
+
+                    <ul class="submenu ">
+
+                        <li>
+                             <a th:href="@{/departments}">Manage Departments</a>
+                        </li>
+
+                       
+
+                    </ul>
+
+                </li>
+                
+                
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="fas fa-file-alt" width="20"></i>
+                        <span>Fields</span>
+                    </a>
+
+                    <ul class="submenu ">
+
+                        <li>
+                             <a th:href="@{/filieres}">Manage Fields</a>
+                        </li>
+
+                       
+
+                    </ul>
+
+                </li>
+    <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="fas fa-graduation-cap" width="20"></i>
+                        <span>Exams</span>
+                    </a>
+
+                    <ul class="submenu ">
+
+                        <li>
+                            <a th:href="@{/AddExamen}">Manage Exam</a>
+                        </li>
+
+                        <li>
+                          <a th:href="@{/ListeExamens}">View Exams</a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+
+            </ul>
+        </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+</div>
+</body>
+</html>

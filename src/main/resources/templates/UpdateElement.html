@@ -54,7 +54,7 @@
     <div id="emailHelp" class="form-text"></div>
   </div>
    <div class="mb-3">
-  <label for="exampleSelect" class="form-label">Choisissez le coordinateur :</label>
+  <label for="exampleSelect" class="form-label">Choisissez le Enseignant :</label>
   <select id="exampleSelect" class="form-select" aria-label="Default select example"  name="IdCoord">
   
     <option th:selected="${ElementPedagogique.enseignantcoordonne.firstName == e.firstName}" th:each="e : ${Enseignants}" th:value="${e.id}" th:text="${e.firstName}"></option>
@@ -64,7 +64,7 @@
 <input type="hidden" th:value="${ElementPedagogique.IdEpd}" name="IdEpd" />
 
 <div class="mb-3">
-  <label for="exampleSelect" class="form-label">Choisissez le Enseignant :</label>
+  <label for="exampleSelect" class="form-label">Choisissez le Coordinateur :</label>
   <select id="exampleSelect" class="form-select" aria-label="Default select example" name="IdEns">
   
 <option th:selected="${ElementPedagogique.enseignantEnsiger.firstName == e.firstName}" th:each="e : ${Enseignants}" th:value="${e.id}" th:text="${e.firstName}" ></option>

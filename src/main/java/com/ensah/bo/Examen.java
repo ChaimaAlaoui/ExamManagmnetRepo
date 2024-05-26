@@ -1,6 +1,7 @@
 package com.ensah.bo;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -12,6 +13,13 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Examen {
+	private String  titreExamen;
+	public String getTitreExamen() {
+		return titreExamen;
+	}
+	public void setTitreExamen(String titreExamen) {
+		this.titreExamen = titreExamen;
+	}
 	public Long getIdExamen() {
 		return IdExamen;
 	}
@@ -23,6 +31,24 @@ public class Examen {
 	}
 	public void setListeSurveillance(List<Surveillance> listeSurveillance) {
 		ListeSurveillance = listeSurveillance;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public int getDurationMinutes() {
+		return durationMinutes;
+	}
+	public void setDurationMinutes(int durationMinutes) {
+		this.durationMinutes = durationMinutes;
+	}
+	public int getRealDurationMinutes() {
+		return realDurationMinutes;
+	}
+	public void setRealDurationMinutes(int realDurationMinutes) {
+		this.realDurationMinutes = realDurationMinutes;
 	}
 	public TypeExamen getTypeExamen() {
 		return typeExamen;
@@ -45,7 +71,7 @@ public class Examen {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long IdExamen;
-@OneToMany(mappedBy = "examen", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+@OneToMany(mappedBy = "examen", cascade = { CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE })
 private List<Surveillance> ListeSurveillance=new ArrayList<>();
 
 @ManyToOne
@@ -56,6 +82,16 @@ private Semestre semestre;
 private Session session;
 @ManyToOne  
 private ElementPedagogique elementP ;
+private Date date;
+private String heur;
+public String getHeur() {
+	return heur;
+}
+public void setHeur(String heur) {
+	this.heur = heur;
+}
+private int durationMinutes;
+private int realDurationMinutes;
 public ElementPedagogique getElementP() {
 	return elementP;
 }
