@@ -36,7 +36,7 @@
                 <input id="Title-input" type="text" class="form-control" placeholder="Title " name="NomExamen">
             </div>
             <div class="col">
-          <label for="exampleSelect" class="form-label"> Type Element  :</label>
+          <label for="exampleSelect" class="form-label"> Type Examen  :</label>
   <select id="exampleSelect" class="form-select" aria-label="Default select example" name="TypeExamen" >
         <option th:each="e : ${listeTypeExamen}" th:value="${e.IdTypeExamen}" th:text="${e.titre}" ></option>
 
@@ -45,9 +45,9 @@
         </div>
         <div class="row mb-3">
         <div class="col">
-          <label for="exampleSelect" class="form-label"> Element pedagogique :</label>
-  <select id="exampleSelect" class="form-select" aria-label="Default select example" name="elementPed" >
-        <option th:each="e : ${listeModules}" th:value="${e.IdEpd}" th:text="${e.nomEpd}" ></option>
+          <label for="SelectElement" class="form-label"> Element pedagogique :</label>
+  <select id="SelectElement" class="form-select" aria-label="Default select example" name="elementPed" >
+        <option   th:each="e : ${listeModules}" th:value="${e.IdEpd}" th:text="${e.nomEpd}" th:attr="data-type=${e.typeElement.Duree}" ></option>
 
   </select>
             </div>
@@ -92,8 +92,8 @@
             <input name="DureeExam"  value="2"  type="number" id="duration-input" class="form-control" placeholder="Durée de l'examen" pattern="^\d+(\.\d+)?h$" title="Enter duration in the format Nh or N.Nh">   
                      </div>
             <div class="col">
-  <label for="durationR-input">Durée réelle de l'examen</label>
-            <input value="2"  type="number" id="duration-input" class="form-control" placeholder="Durée réelle de l'examen" pattern="^\d+(\.\d+)?h$" title="Enter duration in the format Nh or N.Nh" disabled>   
+  <label for="duration-input-real">Durée réelle de l'examen</label>
+            <input value="2"  type="number" id="duration-input-real" class="form-control" placeholder="Durée réelle de l'examen" pattern="^\d+(\.\d+)?h$" title="Enter duration in the format Nh or N.Nh" disabled>   
                      </div>
         </div>
 
@@ -143,6 +143,29 @@
 </div>
 
 <script>
+
+function updateDurationFields(event) {
+    var selectedOption = event.target.options[event.target.selectedIndex];
+    var duration = selectedOption.getAttribute("data-type");
+    var duration_input = document.getElementById("duration-input");
+    var duration_input_real = document.getElementById("duration-input-real");
+    duration_input.value = duration;
+    duration_input_real.value = duration;
+    console.log("Description:", duration);
+}
+
+var selectElement = document.getElementById("SelectElement");
+
+selectElement.onchange = updateDurationFields;
+
+updateDurationFields({ target: selectElement });
+var duration_input = document.getElementById("duration-input");
+duration_input.addEventListener('input', function(event) {
+	var duration_input_real = document.getElementById("duration-input-real");
+	duration_input_real.value=event.target.value;
+});
+
+
 var count = 1;
 
 function Next() {

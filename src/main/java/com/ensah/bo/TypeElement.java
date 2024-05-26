@@ -13,6 +13,13 @@ public class TypeElement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 public Long IdType;
+	public int Duree ;
+	public int getDuree() {
+		return Duree;
+	}
+	public void setDuree(int duree) {
+		Duree = duree;
+	}
 	public String titre ;
 	
 	public Long getIdType() {
