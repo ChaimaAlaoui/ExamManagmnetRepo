@@ -42,6 +42,15 @@
 
   </select>
             </div>
+            <div class="col">
+          <label for="exampleSelect" class="form-label"> Année universitaire  :</label>
+  <select id="exampleSelect" class="form-select" aria-label="Default select example" name="AnneeUniversitaire" >
+        <option value="2023-2024" >2023-2024</option>
+        <option value="2024-2025" >2024-2025</option>
+        <option value="2025-2026" >2025-2026</option>
+
+  </select>
+            </div>
         </div>
         <div class="row mb-3">
         <div class="col">
@@ -86,7 +95,7 @@
             <input name="DateExam"  type="date" id="date-input" class="form-control" placeholder="Date de l'examen ">            </div>
             <div class="col">
   <label for="time-input">Heure de l'examen</label>
-            <input name="HeurExam"   type="time" id="time-input" class="form-control" placeholder="Heure de l'examen">            </div>
+            <input name="HeurExam"   type="time" id="time-input" class="form-control" min="08:00" max="18:30" placeholder="Heure de l'examen">            </div>
             <div class="col">
   <label for="duration-input">Durée de l'examen</label>
             <input name="DureeExam"  value="2"  type="number" id="duration-input" class="form-control" placeholder="Durée de l'examen" pattern="^\d+(\.\d+)?h$" title="Enter duration in the format Nh or N.Nh">   
@@ -143,7 +152,11 @@
 </div>
 
 <script>
-
+document.addEventListener('DOMContentLoaded', (event) => {
+    const dateInput = document.getElementById('date-input');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+});
 function updateDurationFields(event) {
     var selectedOption = event.target.options[event.target.selectedIndex];
     var duration = selectedOption.getAttribute("data-type");
@@ -183,6 +196,17 @@ function Next() {
 if (count == 1) {
     document.getElementById("backBtn").disabled = true;
 }
+document.getElementById('time-input').addEventListener('input', function() {
+    const minTime = '08:00';
+    const maxTime = '18:30';
+    const value = this.value;
+
+    if (value < minTime) {
+        this.value = minTime;
+    } else if (value > maxTime) {
+        this.value = maxTime;
+    }
+});
 function Back() {
     if (count > 1) {
         if (count == 2) {

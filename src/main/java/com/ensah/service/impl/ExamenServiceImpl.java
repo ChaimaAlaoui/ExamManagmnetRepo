@@ -46,6 +46,11 @@ public class ExamenServiceImpl implements ExamenService {
 		return ExamenRepository.findAllByDate(date);
 	}
 
+	@Override
+	public List<Examen> getAllExamenByAnnee(String Annee) {
+		return ExamenRepository.findAllByAnneeUniversitaire(Annee);
+	}
+
 
 
 }

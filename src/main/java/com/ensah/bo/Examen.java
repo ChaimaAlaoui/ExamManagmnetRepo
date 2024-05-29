@@ -14,6 +14,14 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Examen {
 	private String  titreExamen;
+	private String anneeUniversitaire;
+	
+	public String getAnneeUniversitaire() {
+		return anneeUniversitaire;
+	}
+	public void setAnneeUniversitaire(String anneeUniversitaire) {
+		this.anneeUniversitaire = anneeUniversitaire;
+	}
 	public String getTitreExamen() {
 		return titreExamen;
 	}

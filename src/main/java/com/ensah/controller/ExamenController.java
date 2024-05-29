@@ -23,6 +23,7 @@ import com.ensah.Algorithme.TimeConverter;
 import com.ensah.bo.Enseignant;
 import com.ensah.bo.Salle;
 import com.ensah.bo.Examen;
+import com.ensah.bo.Niveau;
 import com.ensah.bo.Surveillance;
 import com.ensah.service.ElementService;
 import com.ensah.service.EnseignantService;
@@ -71,12 +72,15 @@ private SalleService salleService;
 		return "AddExamen";
 	}
 	@PostMapping("/SubmitExam")
-	public String  SubmitExam (@RequestParam List<String>teacherCount,@RequestParam(name = "salles", required = false) List<String>salles,@RequestParam String NomExamen,@RequestParam String elementPed,@RequestParam String session,@RequestParam String method,@RequestParam String  DateExam,@RequestParam String  HeurExam,@RequestParam String  DureeExam,@RequestParam String rapport,@RequestParam String semestre,@RequestParam String TypeExamen,RedirectAttributes redirectAttributes) {
+	public String  SubmitExam (@RequestParam List<String>teacherCount,@RequestParam(name = "salles", required = false) List<String>salles,@RequestParam String NomExamen,@RequestParam String elementPed,@RequestParam String session,@RequestParam String method,@RequestParam String  DateExam,@RequestParam String  HeurExam,@RequestParam String  DureeExam,@RequestParam String rapport,@RequestParam String semestre,@RequestParam String TypeExamen,String AnneeUniversitaire ,RedirectAttributes redirectAttributes) {
 		if(salles==null) {redirectAttributes.addFlashAttribute("error", "Veuillez choisir une salle.");
     	
    	 return "redirect:/AddExamen";}
-		
+
 		Examen  exam =new Examen();
+		Long elementId = Long.valueOf(Integer.parseInt(elementPed)); 
+		
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date DateExamen;
 	    try {
@@ -96,8 +100,21 @@ private SalleService salleService;
 		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 	        String formattedTime = updatedTime.format(formatter);
 		    float ExamIntervalEnd =TimeConverter.convertTimeToFloat(formattedTime);
+		    Niveau niveau =elementServiceImpl.getElementById(elementId).getNiveau();
+			
+		List<String>ListHeurs=Human_ResourcesServiceImpl.getListHeurExamen(DateExamen, ExamIntervalStart, ExamIntervalEnd,niveau);
+		if(ListHeurs.size()!=0) {
+			StringBuilder errorMessage = new StringBuilder("This class already has an exam scheduled at");
 
-		
+			for (String heur : ListHeurs) {
+			    errorMessage.append(heur).append(", ");
+			}
+
+			errorMessage.setLength(errorMessage.length() - 2);
+			 redirectAttributes.addFlashAttribute("error",errorMessage);
+			
+		        return "redirect:/AddExamen";	
+		}
 		List<Enseignant> ListeEnseignants=Human_ResourcesServiceImpl.getAvailableTeachers(DateExamen, ExamIntervalStart, ExamIntervalEnd);
 		Set<Salle> ListeUnavailableSalles=Human_ResourcesServiceImpl.getUnavailableSalles(DateExamen, ExamIntervalStart, ExamIntervalEnd);
 
@@ -154,8 +171,7 @@ if(ListeUnavailableSalles.contains(salleService.getSalleById(idSalleSur))) {
 		}
 		exam.setTitreExamen(NomExamen);
 		
-		Long elementId = Long.valueOf(Integer.parseInt(elementPed)); 
-		exam.setElementP(elementServiceImpl.getElementById(elementId));
+	
 		Long elementSession = Long.valueOf(Integer.parseInt(session)); 
 		exam.setSession(sessionServiceimpl.getSessionById(elementSession));
 		exam.setHeur(HeurExam);
@@ -167,6 +183,7 @@ if(ListeUnavailableSalles.contains(salleService.getSalleById(idSalleSur))) {
 		        redirectAttributes.addFlashAttribute("error", "Format de date invalide.");
 		        return "redirect:/AddExamen";
 		    }
+		exam.setElementP(elementServiceImpl.getElementById(elementId));
 		exam.setDurationMinutes(Integer.parseInt(DureeExam));
 		exam.setRealDurationMinutes(Integer.parseInt(DureeExam));
 		Long elementsemestre = Long.valueOf(Integer.parseInt(semestre));
@@ -176,6 +193,11 @@ if(ListeUnavailableSalles.contains(salleService.getSalleById(idSalleSur))) {
 
 		exam.setSemestre(semestreService.getSemestreById(elementsemestre));
 		exam.setListeSurveillance(listeSurveillance);
+		exam.setAnneeUniversitaire(AnneeUniversitaire);
+		if(Human_ResourcesServiceImpl.ExamenIsExist(elementServiceImpl.getElementById(elementId),TypeExamenImpl.getTypeExamenById(TypeExamenId),AnneeUniversitaire,sessionServiceimpl.getSessionById(elementSession))) {
+			 redirectAttributes.addFlashAttribute("error","deja exam exist");
+			 return "redirect:/AddExamen";
+		}
 		examenService.saveExamen(exam);
         System.out.println("\n le titre "+NomExamen);    
         System.out.println("\n l'element pedagogique "+elementPed);  
