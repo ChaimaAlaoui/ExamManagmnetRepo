@@ -1,5 +1,6 @@
 package com.ensah.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class ExamenServiceImpl implements ExamenService {
 	@Override
 	public void deleteExamenById(Long id) {
 		ExamenRepository.deleteById(id);	
+	}
+
+	@Override
+	public List<Examen> getAllExamenByDate(Date date) {
+		return ExamenRepository.findAllByDate(date);
 	}
 
 

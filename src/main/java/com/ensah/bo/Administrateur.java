@@ -11,9 +11,17 @@ import jakarta.persistence.*;
 public class Administrateur extends Personnel {
 
    private String grade;
+   private int seuil;
 
 public String getGrade() {
 	return grade;
+}
+public int getSeuil() {
+	return seuil;
+}
+
+public void setSeuil(int seuil) {
+	this.seuil = seuil;
 }
 
 public void setGrade(String grade) {
