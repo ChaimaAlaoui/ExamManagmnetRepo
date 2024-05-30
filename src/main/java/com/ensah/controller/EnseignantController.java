@@ -17,6 +17,7 @@ import com.ensah.bo.Enseignant;
 import com.ensah.bo.Filiere;
 import com.ensah.bo.Groupe;
 import com.ensah.bo.Niveau;
+import com.ensah.bo.Surveillance;
 import com.ensah.repository.GroupeRepository;
 import com.ensah.service.DepartementService;
 import com.ensah.service.ElementService;
@@ -35,6 +36,7 @@ public class EnseignantController {
 	DepartementService departmentService;
 	@Autowired
 	FiliereService filiereService;
+	
 	
 	@Autowired
     private  ElementService pedagogicalElementService;
@@ -142,12 +144,44 @@ public class EnseignantController {
 	}
 	
 	// handler method to handle delete student request
-	
 	@GetMapping("/enseignants/{id}")
-	public String deleteEnseignant(@PathVariable Long id) {
-		enseignantService.deleteEnseignantById(id);
-		return "redirect:/enseignants";
+	public String deleteEnseignant(@PathVariable Long id, Model model) {
+	    Enseignant enseignant = enseignantService.getEnseignantById(id);
+	    
+	    if (enseignant == null) {
+	        // Gérer le cas où l'enseignant n'existe pas
+	        return "redirect:/enseignants";
+	    }
+	    
+	    // Récupérer la liste des enseignants surveillants
+	    List<Surveillance> surveillants = enseignant.getListeSurveillanceSurveille();
+	    
+	    if (!surveillants.isEmpty()) {
+		   
+	    	
+	        // Si l'enseignant est surveillant, transmettre cette information au modèle
+	        model.addAttribute("enseignantSurveillant", true);
+	        
+	    } else {
+	        // Supprimer l'enseignant s'il n'est pas surveillant
+	        enseignantService.deleteEnseignantById(id);
+	    }
+	    
+	   
+	    
+	    // Rediriger vers la page de liste des enseignants
+	    return "redirect:/enseignants";
 	}
+
+
+
+	
+//	@GetMapping("/enseignants/{id}")
+//	public String deleteEnseignant(@PathVariable Long id) {
+//		// un test si cet enseignant appartient a la liste des ensignants surveilants?
+//		enseignantService.deleteEnseignantById(id);
+//		return "redirect:/enseignants";
+//	}
 	
 	
 	// Display pedagogical elements of a specific teacher

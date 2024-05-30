@@ -84,11 +84,39 @@
             <td>
                 <div class="d-flex justify-content-around">
                     <a th:href="@{/enseignants/edit/{id}(id=${enseignant.id})}" class="btn btn-primary">Update</a>
-                    <a th:href="@{/enseignants/{id}(id=${enseignant.id})}" class="btn btn-danger">Delete</a>
-                </div>
-            </td>
-        </tr>
-    </tbody>
+                    
+                      <!-- Add a delete button with an onclick event -->
+<a href="#" class="btn btn-danger" th:onclick="'confirmDelete(' + ${enseignant.id} + ',' + ${enseignantSurveillant} + ')'">Delete</a>
+
+<!-- JavaScript code to show the message as a prompt dialogue -->
+<script th:inline="javascript">
+    function confirmDelete(id, isSurveillant) {
+        if (isSurveillant === true) {
+            // If the enseignant is a surveillant, show the warning message
+            if (confirm("Impossible de supprimer, l'enseignant est surveillant. Voulez-vous continuer?")) {
+                // If user confirms, do nothing
+                return;
+            } else {
+                // If user cancels, do nothing
+                return;
+            }
+        }
+        
+        // If the enseignant is not a surveillant, show the confirmation message
+        if (confirm("Are you sure you want to delete this enseignant?")) {
+            // If user confirms, proceed with deletion
+            window.location.href = "/enseignants/" + id;
+        }
+    }
+</script>
+
+
+
+
+                    </div>
+                </td>
+            </tr>
+            </tbody>
 </table>
 
   </div>
