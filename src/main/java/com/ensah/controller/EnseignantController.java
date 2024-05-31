@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ensah.bo.Departement;
 import com.ensah.bo.ElementPedagogique;
@@ -144,32 +145,29 @@ public class EnseignantController {
 	}
 	
 	// handler method to handle delete student request
-	@GetMapping("/enseignants/{id}")
-	public String deleteEnseignant(@PathVariable Long id, Model model) {
+	@GetMapping("/enseignants/{id}/check")
+	public String checkAndDeleteEnseignant(@PathVariable Long id, RedirectAttributes redirectAtt) {
 	    Enseignant enseignant = enseignantService.getEnseignantById(id);
 	    
 	    if (enseignant == null) {
-	        // Gérer le cas où l'enseignant n'existe pas
+	        // Handle case where enseignant does not exist
+	        redirectAtt.addFlashAttribute("errorMessage", "L'enseignant n'existe pas.");
 	        return "redirect:/enseignants";
 	    }
 	    
-	    // Récupérer la liste des enseignants surveillants
+	    // Retrieve the list of surveillants for the enseignant
 	    List<Surveillance> surveillants = enseignant.getListeSurveillanceSurveille();
 	    
 	    if (!surveillants.isEmpty()) {
-		   
-	    	
-	        // Si l'enseignant est surveillant, transmettre cette information au modèle
-	        model.addAttribute("enseignantSurveillant", true);
-	        
+	        // If the enseignant is a surveillant, show an error message
+	        redirectAtt.addFlashAttribute("errorMessage", "Impossible de supprimer, l'enseignant est surveillant.");
 	    } else {
-	        // Supprimer l'enseignant s'il n'est pas surveillant
+	        // If the enseignant is not a surveillant, delete the enseignant
 	        enseignantService.deleteEnseignantById(id);
+	        redirectAtt.addFlashAttribute("successMessage", "L'enseignant a été supprimé avec succès.");
 	    }
 	    
-	   
-	    
-	    // Rediriger vers la page de liste des enseignants
+	    // Redirect to the list of enseignants
 	    return "redirect:/enseignants";
 	}
 

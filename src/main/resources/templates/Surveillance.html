@@ -13,18 +13,24 @@
             <thead>
                 <tr>
                     <th>Surveillance ID</th>
+                     <th>Salle</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="surveillance : ${surveillanceList}">
                     <td th:text="${surveillance.idSurveillance}"></td>
+                    
+                      <td th:text="${surveillance.salle.nomSalle}"></td>
+                    
                     <td>
                         <form action="/viewSurveillants" method="post">
                             <input type="hidden" th:value="${surveillance.IdSurveillance}" name="id">
                             <button type="submit" class="btn btn-primary">View Surveillants</button>
                         </form>
                     </td>
+                    
+                  
                 </tr>
             </tbody>
         </table>
