@@ -264,7 +264,7 @@ private SalleService salleService;
 	               	 			
 
 	 			
-	             s.setEnseignantCoordonneSurveillance(coordinateur1);
+	             
                  s.setEnseignantSurveillanceList(listEnseignantSurveillance);
                  if(ListeUnavailableSalles.contains(salleService.getSalleById(idSalleSur))) {
                      StringBuilder errorMessage = new StringBuilder("The following classRooms are not available in this date " + DateExam + " and this interval " + HeurExam+"to"+updatedTime + ": ");
@@ -284,7 +284,7 @@ private SalleService salleService;
 				
 			}
 			
-		
+		exam.setEnseignantCoordonne(coordinateur1);
 			
             
 		}
@@ -328,7 +328,6 @@ private SalleService salleService;
 		                   ListeAdministrateur.remove(indexAD);
 		                     }
 				       Long idSalleSur = Long.valueOf(IdSalle); 
-				       s.setEnseignantCoordonneSurveillance(coordinateur);
 	                   s.setEnseignantSurveillanceList(listEnseignantSurveillance);
 	                  if(ListeUnavailableSalles.contains(salleService.getSalleById(idSalleSur))) {
 		                      StringBuilder errorMessage = new StringBuilder("The following classRooms are not available in this date " + DateExam + " and this interval " + HeurExam+"to"+updatedTime + ": ");
@@ -345,7 +344,7 @@ private SalleService salleService;
 		              System.out.println("surv"+i+"liste :"+s.getEnseignantSurveillanceList());    
 				
 			} 
-		       	
+			      exam.setEnseignantCoordonne(coordinateur1);  	
 		}
 		
 

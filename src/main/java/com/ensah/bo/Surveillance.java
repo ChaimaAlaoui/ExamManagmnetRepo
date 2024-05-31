@@ -18,8 +18,7 @@ public class Surveillance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long IdSurveillance;
-	@ManyToOne
-	private Enseignant enseignantCoordonneSurveillance;
+	
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "Enseignant__Surveillance", joinColumns = @JoinColumn(name = "id_Surveillance"), inverseJoinColumns = @JoinColumn(name = "id_Enseignant"))
@@ -35,12 +34,7 @@ private Long IdSurveillance;
 	public void setIdSurveillance(Long idSurveillance) {
 		IdSurveillance = idSurveillance;
 	}
-	public Enseignant getEnseignantCoordonneSurveillance() {
-		return enseignantCoordonneSurveillance;
-	}
-	public void setEnseignantCoordonneSurveillance(Enseignant enseignantCoordonneSurveillance) {
-		this.enseignantCoordonneSurveillance = enseignantCoordonneSurveillance;
-	}
+	
 	public List<Enseignant> getEnseignantSurveillanceList() {
 		return enseignantSurveillanceList;
 	}

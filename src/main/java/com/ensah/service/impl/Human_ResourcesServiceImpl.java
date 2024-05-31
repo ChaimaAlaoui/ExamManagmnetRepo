@@ -50,7 +50,8 @@ private GroupeService GroupeServiceImpl;
 			
 			float ExamIntervalStart =TimeConverter.convertTimeToFloat(i.getHeur());
 			
-			
+			listEliminatedTeachers.add(i.getEnseignantCoordonne());
+
 
 LocalTime time = LocalTime.parse(i.getHeur());
 
@@ -63,7 +64,6 @@ LocalTime time = LocalTime.parse(i.getHeur());
 			Interval ExamInterval=new Interval(ExamIntervalStart,ExamIntervalEnd);
 			if(Interval.getIntersection(ExamInterval, myInterval)) {
 				for(Surveillance k : i.getListeSurveillance()) {
-					listEliminatedTeachers.add(k.getEnseignantCoordonneSurveillance());
 					for(Enseignant e:k.getEnseignantSurveillanceList()) {
 						listEliminatedTeachers.add(e);
 						
@@ -186,7 +186,7 @@ System.out.print(listAllGroupes.size());
 			
 			float ExamIntervalStart =TimeConverter.convertTimeToFloat(i.getHeur());
 			
-			
+			listEliminatedTeachers.add(i.getEnseignantCoordonne());
 
 LocalTime time = LocalTime.parse(i.getHeur());
 
@@ -199,7 +199,6 @@ LocalTime time = LocalTime.parse(i.getHeur());
 			Interval ExamInterval=new Interval(ExamIntervalStart,ExamIntervalEnd);
 			if(Interval.getIntersection(ExamInterval, myInterval)) {
 				for(Surveillance k : i.getListeSurveillance()) {
-					listEliminatedTeachers.add(k.getEnseignantCoordonneSurveillance());
 					for(Enseignant e:k.getEnseignantSurveillanceList()) {
 						listEliminatedTeachers.add(e);
 						

@@ -19,7 +19,7 @@
     <h5  class="text-center card-title" th:text="${exam.titreExamen}">Card title</h5>
                             <p class="card-text ml-3"  ><b>Element Pedagogique: </b><span th:text="${exam.elementP.nomEpd}" ></span></p> 
                             <p class="card-text ml-3" ><b>Type Examen: </b><span th:text="${exam.typeExamen.titre}" ></span></p> 
-                            <p class="card-text ml-3" ><b>Coordinateur: </b><span th:text="${exam.titreExamen}" ></span></p> 
+                            <p class="card-text ml-3" ><b>Coordinateur: </b><span th:text="${exam.enseignantCoordonne.firstName} + ' ' + ${exam.enseignantCoordonne.lastName}" ></span></p> 
                             <p class="card-text ml-3" ><b>Duree: </b><span th:text="${exam.durationMinutes}" ></span>min</p> 
                             <p class="card-text ml-3" ><b>Pv : </b><span ><a th:href="@{/downloadPv/{id}(id=${exam.IdExamen})}">Download</a></span></p> 
                             <p class="card-text ml-3" ><b>Epreuve : </b><span ><a th:href="@{/downloadEpreuve/{id}(id=${exam.IdExamen})}">Download</a></span></p> 

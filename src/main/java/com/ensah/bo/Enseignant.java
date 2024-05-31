@@ -18,8 +18,7 @@ public class Enseignant extends Personnel {
 
 	
 
-	 @OneToMany(mappedBy = "enseignantCoordonneSurveillance", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	 List<Surveillance> listeSurveillanceCoordonne=new ArrayList<>();
+	 
 	 
 	 @ManyToMany(mappedBy = "enseignantSurveillanceList")
 		private List<Surveillance> listeSurveillanceSurveille=new ArrayList<>();
@@ -48,14 +47,7 @@ public class Enseignant extends Personnel {
 
 	
 
-	public List<Surveillance> getListeSurveillanceCoordonne() {
-		return listeSurveillanceCoordonne;
-	}
-
-	public void setListeSurveillanceCoordonne(List<Surveillance> listeSurveillanceCoordonne) {
-		this.listeSurveillanceCoordonne = listeSurveillanceCoordonne;
-	}
-
+	
 	public List<Surveillance> getListeSurveillanceSurveille() {
 		return listeSurveillanceSurveille;
 	}

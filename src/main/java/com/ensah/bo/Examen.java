@@ -18,9 +18,17 @@ public class Examen {
 	    private byte[] PV;
 	 @Lob
 	    private byte[] Epreuve;
+	 @ManyToOne
+		private Enseignant enseignantCoordonne;
 	 private String rapport ;
 	public String getRapport() {
 		return rapport;
+	}
+	public Enseignant getEnseignantCoordonne() {
+		return enseignantCoordonne;
+	}
+	public void setEnseignantCoordonne(Enseignant enseignantCoordonne) {
+		this.enseignantCoordonne = enseignantCoordonne;
 	}
 	public void setRapport(String rapport) {
 		this.rapport = rapport;
