@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+</head>
+<body>
+    <div th:include="fragments/header :: header"></div>
+   
+	<div class ="container mt-5">
+
+<div class="card mb-3">
+ 
+  <div class="card-body">
+    <h5  class="text-center card-title" th:text="${exam.titreExamen}">Card title</h5>
+                            <p class="card-text ml-3"  ><b>Element Pedagogique: </b><span th:text="${exam.elementP.nomEpd}" ></span></p> 
+                            <p class="card-text ml-3" ><b>Type Examen: </b><span th:text="${exam.typeExamen.titre}" ></span></p> 
+                            <p class="card-text ml-3" ><b>Coordinateur: </b><span th:text="${exam.titreExamen}" ></span></p> 
+                            <p class="card-text ml-3" ><b>Duree: </b><span th:text="${exam.durationMinutes}" ></span>min</p> 
+                            <p class="card-text ml-3" ><b>Pv : </b><span ><a th:href="@{/downloadPv/{id}(id=${exam.IdExamen})}">Download</a></span></p> 
+                            <p class="card-text ml-3" ><b>Epreuve : </b><span ><a th:href="@{/downloadEpreuve/{id}(id=${exam.IdExamen})}">Download</a></span></p> 
+                            
+                            
+                            <p class="card-text ml-3" ><b>Semestre: </b><span th:text="${exam.semestre.nomSemestre}" ></span></p>
+                            <p class="card-text ml-3" ><b>Session: </b><span th:text="${exam.session.nomSession}" ></span></p> 
+                            <p class="card-text ml-3" ><b>Annee Universitaire: </b><span th:text="${exam.anneeUniversitaire}" ></span></p> 
+                            <p class="card-text ml-3" ><b>Rapport : </b><span th:text="${exam.rapport}" ></span></p> 
+    
+    <p class="card-text ml-3"><small class="text-muted">Date : <span th:text="${#dates.format(exam.date, 'yyyy-MM-dd')}"></span> | <span th:text="${exam.heur}"></span></small></p>
+  </div>
+</div>
+</div>
+</body>
+</html>

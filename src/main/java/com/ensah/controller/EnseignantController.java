@@ -50,7 +50,7 @@ public class EnseignantController {
 	@GetMapping("/enseignants")
 	public String listEnseignants(Model model) {
 		model.addAttribute("enseignants", enseignantService.getAllEnseignants());
-		return "test";
+		return "enseignants";
 	}
 	
 

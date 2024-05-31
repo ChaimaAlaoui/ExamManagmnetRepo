@@ -10,4 +10,6 @@ import com.ensah.bo.Examen;
 @Repository
 public interface ExamenRepository extends JpaRepository<Examen, Long> {
     List<Examen> findAllByDate(Date date);
+    List<Examen> findAllByAnneeUniversitaire(String anneeUniversitaire);
+
 }

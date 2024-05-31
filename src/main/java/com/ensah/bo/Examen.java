@@ -8,12 +8,44 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
 public class Examen {
+	 @Lob
+	    private byte[] PV;
+	 @Lob
+	    private byte[] Epreuve;
+	 private String rapport ;
+	public String getRapport() {
+		return rapport;
+	}
+	public void setRapport(String rapport) {
+		this.rapport = rapport;
+	}
+	public byte[] getPV() {
+		return PV;
+	}
+	public void setPV(byte[] pV) {
+		PV = pV;
+	}
+	public byte[] getEpreuve() {
+		return Epreuve;
+	}
+	public void setEpreuve(byte[] epreuve) {
+		Epreuve = epreuve;
+	}
 	private String  titreExamen;
+private String anneeUniversitaire;
+	
+	public String getAnneeUniversitaire() {
+		return anneeUniversitaire;
+	}
+	public void setAnneeUniversitaire(String anneeUniversitaire) {
+		this.anneeUniversitaire = anneeUniversitaire;
+	}
 	public String getTitreExamen() {
 		return titreExamen;
 	}

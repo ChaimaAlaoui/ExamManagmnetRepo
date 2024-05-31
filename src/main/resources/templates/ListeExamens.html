@@ -23,14 +23,19 @@
                     <div class="card-header" th:text="${card.session.nomSession}"></div>
                     <div class="card-body">
     <h5 class="card-title" th:text="${card.titreExamen}">Special title treatment</h5>
-    <p class="card-text"><b>Semestre: </b><span th:text="${card.semestre.nomSemestre}"></span></p>
-    <p class="card-text"><b>Type Element: </b><span th:text="${card.typeExamen.titre}"></span></p>
-    <p class="card-text"><b>Element Pedagogique: </b><span th:text="${card.elementP.nomEpd}"></span></p>
+                        <p class="card-text" ><b>Semestre: </b><span th:text="${card.semestre.nomSemestre}"></span></p>
+                        <p class="card-text" ><b>Type Examen: </b><span th:text="${card.typeExamen.titre}"></span></p> 
+                        <p class="card-text" ><b>Element Pedagogique: </b><span th:text="${card.elementP.nomEpd}"></span></p> 
+                        <p class="card-text" ><b>Annee Universitaire: </b><span th:text="${card.AnneeUniversitaire}"></span></p> 
     <a class="btn btn-primary" th:href="@{/exam/surveillance/{id}(id=${card.IdExamen})}">View Surveillance</a>
     <!-- Add the Delete button -->
     <form th:action="@{/exam/delete/{id}(id=${card.IdExamen})}" method="post" style="display: inline;">
         <button type="submit" class="btn btn-danger">Delete</button>
     </form>
+        <form th:action="@{/Examen_info/{id}(id=${card.IdExamen})}" method="post" style="display: inline;">
+    
+    <button type="submit" class="btn btn-secondary">Info</button>
+     </form>
 </div>
                     <div class="card-footer text-body-secondary"  th:text="'Date: ' +${#dates.format(card.date, 'yyyy-MM-dd')} + ', Heure: ' + ${card.heur}">2 days ago</div>
                 </div>

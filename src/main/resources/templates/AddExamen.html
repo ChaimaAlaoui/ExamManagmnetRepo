@@ -14,7 +14,7 @@
            
         }
         
-
+ 
 
         
     </style>
@@ -26,28 +26,40 @@
         <p class="m-4" style="font-weight: bold;">Add Examen</p>
      
     </div>
-    <div style="color:red; text-algin:centre"><p th:text="${error}"></p></div>
+
 <div class="container">
-    <form action="SubmitExam" method="post">
+ <div  th:if="${error != null}" >
+    <div class="alert alert-danger" role="alert" th:text="${error}"></div>
+</div>
+    <form action="SubmitExam" method="post" enctype="multipart/form-data">
         <div class="row mb-3">
         <div class="col">
           <label for="Title-input">Title</label>
         
-                <input id="Title-input" type="text" class="form-control" placeholder="Title " name="NomExamen">
+                <input required id="Title-input" type="text" class="form-control" placeholder="Title " name="NomExamen">
             </div>
             <div class="col">
-          <label for="exampleSelect" class="form-label"> Type Element  :</label>
+          <label for="exampleSelect" class="form-label"> Type Examen  :</label>
   <select id="exampleSelect" class="form-select" aria-label="Default select example" name="TypeExamen" >
         <option th:each="e : ${listeTypeExamen}" th:value="${e.IdTypeExamen}" th:text="${e.titre}" ></option>
+
+  </select>
+            </div>
+            <div class="col">
+          <label for="exampleSelect" class="form-label"> Année universitaire  :</label>
+  <select id="exampleSelect" class="form-select" aria-label="Default select example" name="AnneeUniversitaire" >
+        <option value="2023-2024" >2023-2024</option>
+        <option value="2024-2025" >2024-2025</option>
+        <option value="2025-2026" >2025-2026</option>
 
   </select>
             </div>
         </div>
         <div class="row mb-3">
         <div class="col">
-          <label for="exampleSelect" class="form-label"> Element pedagogique :</label>
-  <select id="exampleSelect" class="form-select" aria-label="Default select example" name="elementPed" >
-        <option th:each="e : ${listeModules}" th:value="${e.IdEpd}" th:text="${e.nomEpd}" ></option>
+          <label for="SelectElement" class="form-label"> Element pedagogique :</label>
+  <select id="SelectElement" class="form-select" aria-label="Default select example" name="elementPed" >
+        <option   th:each="e : ${listeModules}" th:value="${e.IdEpd}" th:text="${e.nomEpd}" th:attr="data-type=${e.typeElement.Duree}" ></option>
 
   </select>
             </div>
@@ -73,8 +85,8 @@
               <label for="methodChoix" class="form-label">methodChoix :</label>
              <select id="methodChoix" class="form-select" aria-label="Default select example" name="method">
   
-   <option value="choix1" >choix1</option>
-    <option  value="choix2"  >choix2</option>
+   <option value="parGroupe" >parGroupe</option>
+    <option  value="aléatoirement"  >aléatoirement</option>
   </select>
              </div>
             
@@ -83,17 +95,17 @@
         <div class="row mb-3">
             <div class="col">
   <label for="date-input">Date de l'examen</label>
-            <input name="DateExam"  type="date" id="date-input" class="form-control" placeholder="Date de l'examen ">            </div>
+            <input required name="DateExam"  type="date" id="date-input" class="form-control" placeholder="Date de l'examen ">            </div>
             <div class="col">
   <label for="time-input">Heure de l'examen</label>
-            <input name="HeurExam"   type="time" id="time-input" class="form-control" placeholder="Heure de l'examen">            </div>
+            <input required name="HeurExam"   type="time" id="time-input" class="form-control" min="08:00" max="18:30" placeholder="Heure de l'examen">            </div>
             <div class="col">
   <label for="duration-input">Durée de l'examen</label>
-            <input name="DureeExam"  value="2"  type="number" id="duration-input" class="form-control" placeholder="Durée de l'examen" pattern="^\d+(\.\d+)?h$" title="Enter duration in the format Nh or N.Nh">   
+            <input required name="DureeExam"  value="2"  type="number" id="duration-input" class="form-control" placeholder="Durée de l'examen" pattern="^\d+(\.\d+)?h$" title="Enter duration in the format Nh or N.Nh">   
                      </div>
             <div class="col">
-  <label for="durationR-input">Durée réelle de l'examen</label>
-            <input value="2"  type="number" id="duration-input" class="form-control" placeholder="Durée réelle de l'examen" pattern="^\d+(\.\d+)?h$" title="Enter duration in the format Nh or N.Nh" disabled>   
+  <label for="duration-input-real">Durée réelle de l'examen</label>
+            <input required value="2"  type="number" id="duration-input-real" class="form-control" placeholder="Durée réelle de l'examen" pattern="^\d+(\.\d+)?h$" title="Enter duration in the format Nh or N.Nh" disabled>   
                      </div>
         </div>
 
@@ -107,7 +119,7 @@
                     <h6 th:text="' Salle  :  ' + ${salle.nomSalle}" class="card-title"></h6>
                     <p th:text="'Capacite : ' + ${salle.Capacite}" style="font-size:13px"></p>
                     <input type="checkbox" th:id="'checkbox' + ${salle.IdSalle}" name="salles" th:value="${salle.IdSalle + '-' + (row * iterStat.index)}" hidden>
-                    <input type="number" th:id="'serv' + ${salle.IdSalle}" class="form-control NBR" placeholder="Number" name="teacherCount" style="width: 80px; height: 20px;">
+                    <input type="number" th:id="'serv' + ${salle.IdSalle}" class="form-control NBR" placeholder="Number" name="teacherCount" style="width: 80px; height: 20px;Display:none" value="2" required>
                 </div>
             </div>
         </div>
@@ -121,10 +133,10 @@
    <div class="row mb-3">
             <div class="col">
   <label for="Epreuve-input">Epreuve de l'examen</label>
-            <input name="prevuve"  type="file" id="Epreuve-input" class="form-control" placeholder="Epreuve de l'examen">            </div>
+            <input name="prevuve"  type="file" id="Epreuve-input" class="form-control" placeholder="Epreuve de l'examen" accept=".pdf" >            </div>
             <div class="col">
   <label for="PV-input">PV de l'examen</label>
-            <input  name="pv" type="file" id="PV-input" class="form-control" placeholder="PV de l'examen">            </div>
+            <input  name="pv" type="file" id="PV-input" class="form-control" placeholder="PV de l'examen" accept=".pdf" >            </div>
         </div>   
          <div class="row mb-3">
  
@@ -143,6 +155,33 @@
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const dateInput = document.getElementById('date-input');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+});
+function updateDurationFields(event) {
+    var selectedOption = event.target.options[event.target.selectedIndex];
+    var duration = selectedOption.getAttribute("data-type");
+    var duration_input = document.getElementById("duration-input");
+    var duration_input_real = document.getElementById("duration-input-real");
+    duration_input.value = duration;
+    duration_input_real.value = duration;
+    console.log("Description:", duration);
+}
+
+var selectElement = document.getElementById("SelectElement");
+
+selectElement.onchange = updateDurationFields;
+
+updateDurationFields({ target: selectElement });
+var duration_input = document.getElementById("duration-input");
+duration_input.addEventListener('input', function(event) {
+	var duration_input_real = document.getElementById("duration-input-real");
+	duration_input_real.value=event.target.value;
+});
+
+
 var count = 1;
 
 function Next() {
@@ -160,6 +199,17 @@ function Next() {
 if (count == 1) {
     document.getElementById("backBtn").disabled = true;
 }
+document.getElementById('time-input').addEventListener('input', function() {
+    const minTime = '08:30';
+    const maxTime = '18:30';
+    const value = this.value;
+
+    if (value < minTime) {
+        this.value = minTime;
+    } else if (value > maxTime) {
+        this.value = maxTime;
+    }
+});
 function Back() {
     if (count > 1) {
         if (count == 2) {
@@ -187,12 +237,12 @@ function handleCheckboxChange(checkbox) {
 	var inputSev = checkbox.nextElementSibling;
 
     if (checkbox.checked) {
-    	inputSev.style.display="block";
+    	inputSev.style.display="inline";
     
     	console.log("Checkbox checked");
     } else {
     	inputSev.style.display="none";
-    	inputSev.value="";
+    	inputSev.value="2";
     	
 
         console.log("Checkbox unchecked");
@@ -222,6 +272,14 @@ function handleCardClick(card) {
     }
 }
 
+window.onload = function() {
+    var alert = document.querySelector('.alert');
+    if (alert) {
+        setTimeout(function() {
+            alert.style.display = 'none';
+        }, 5000); // 10 seconds in milliseconds
+    }
+};
 </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
