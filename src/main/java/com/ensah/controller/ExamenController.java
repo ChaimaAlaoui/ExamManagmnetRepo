@@ -222,7 +222,7 @@ private SalleService salleService;
 
 	        int randomTeacherIndex = random.nextInt(selectedGroup.getListeEnseignants().size());
 	        coordinateur1 = selectedGroup.getListeEnseignants().get(randomTeacherIndex);
-
+	        exam.setEnseignantCoordonne(coordinateur1);
 	        selectedGroup.getListeEnseignants().remove(randomTeacherIndex);
 			GroupeService.sortGroupsByTeacherCount(ListGroupes);
 
@@ -284,7 +284,7 @@ private SalleService salleService;
 				
 			}
 			
-		exam.setEnseignantCoordonne(coordinateur1);
+		
 			
             
 		}
@@ -295,8 +295,9 @@ private SalleService salleService;
 			                return "redirect:/AddExamen";
 			                                    }
 			      int index1 = rand.nextInt(ListeEnseignants.size());
-			      Enseignant coordinateur=ListeEnseignants.get(index1);
+			      coordinateur1=ListeEnseignants.get(index1);
 			      ListeEnseignants.remove(index1);
+			      exam.setEnseignantCoordonne(coordinateur1); 
 			      for (int  i = 0 ; i<salles.size();i++) {
 				
 				         String[] parts = salles.get(i).split("-");
@@ -344,7 +345,7 @@ private SalleService salleService;
 		              System.out.println("surv"+i+"liste :"+s.getEnseignantSurveillanceList());    
 				
 			} 
-			      exam.setEnseignantCoordonne(coordinateur1);  	
+			      	
 		}
 		
 

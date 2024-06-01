@@ -118,7 +118,7 @@
                 <div onclick="handleCardClick(this)" class="card-body">
                     <h6 th:text="' Salle  :  ' + ${salle.nomSalle}" class="card-title"></h6>
                     <p th:text="'Capacite : ' + ${salle.Capacite}" style="font-size:13px"></p>
-                    <input type="checkbox" th:id="'checkbox' + ${salle.IdSalle}" name="salles" th:value="${salle.IdSalle + '-' + (row * iterStat.index)}" hidden>
+                    <input type="checkbox" th:id="'checkbox' + ${salle.IdSalle}" name="salles" th:value="${salle.IdSalle + '-' + (salle.IdSalle-1)}" hidden>
                     <input type="number" th:id="'serv' + ${salle.IdSalle}" class="form-control NBR" placeholder="Number" name="teacherCount" style="width: 80px; height: 20px;Display:none" value="2" required>
                 </div>
             </div>

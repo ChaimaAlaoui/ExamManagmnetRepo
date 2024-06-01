@@ -2,6 +2,9 @@ package com.ensah.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+
 import java.util.HashSet;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -50,7 +53,7 @@ private GroupeService GroupeServiceImpl;
 			
 			float ExamIntervalStart =TimeConverter.convertTimeToFloat(i.getHeur());
 			
-			listEliminatedTeachers.add(i.getEnseignantCoordonne());
+			
 
 
 LocalTime time = LocalTime.parse(i.getHeur());
@@ -63,6 +66,7 @@ LocalTime time = LocalTime.parse(i.getHeur());
 
 			Interval ExamInterval=new Interval(ExamIntervalStart,ExamIntervalEnd);
 			if(Interval.getIntersection(ExamInterval, myInterval)) {
+				listEliminatedTeachers.add(i.getEnseignantCoordonne());
 				for(Surveillance k : i.getListeSurveillance()) {
 					for(Enseignant e:k.getEnseignantSurveillanceList()) {
 						listEliminatedTeachers.add(e);
@@ -70,8 +74,24 @@ LocalTime time = LocalTime.parse(i.getHeur());
 					}
 				}
 			}
+			
 
 		}
+	    Map<Enseignant, Integer> teacherSupervisionCount = new HashMap<>();
+
+		 for (Examen examen : ListeExamens) {
+		for (Surveillance surveillance : examen.getListeSurveillance()) {
+            teacherSupervisionCount.merge(examen.getEnseignantCoordonne(), 1, Integer::sum);
+
+            for (Enseignant enseignant : surveillance.getEnseignantSurveillanceList()) {
+                teacherSupervisionCount.merge(enseignant, 1, Integer::sum);
+            }
+        }}
+		 for (Map.Entry<Enseignant, Integer> entry : teacherSupervisionCount.entrySet()) {
+		        if (entry.getValue() > 3) {
+		            listEliminatedTeachers.add(entry.getKey());
+		        }
+		    }
 		listAllTeachers.removeAll(listEliminatedTeachers);
 		return listAllTeachers;
 	}
@@ -186,7 +206,6 @@ System.out.print(listAllGroupes.size());
 			
 			float ExamIntervalStart =TimeConverter.convertTimeToFloat(i.getHeur());
 			
-			listEliminatedTeachers.add(i.getEnseignantCoordonne());
 
 LocalTime time = LocalTime.parse(i.getHeur());
 
@@ -198,6 +217,8 @@ LocalTime time = LocalTime.parse(i.getHeur());
 
 			Interval ExamInterval=new Interval(ExamIntervalStart,ExamIntervalEnd);
 			if(Interval.getIntersection(ExamInterval, myInterval)) {
+				listEliminatedTeachers.add(i.getEnseignantCoordonne());
+
 				for(Surveillance k : i.getListeSurveillance()) {
 					for(Enseignant e:k.getEnseignantSurveillanceList()) {
 						listEliminatedTeachers.add(e);
@@ -215,6 +236,23 @@ LocalTime time = LocalTime.parse(i.getHeur());
 				listEliminatedGroupes.add(i);
 			}
 		}
+		Map<Enseignant, Integer> teacherSupervisionCount = new HashMap<>();
+
+		 for (Examen examen : ListeExamens) {
+		for (Surveillance surveillance : examen.getListeSurveillance()) {
+           teacherSupervisionCount.merge(examen.getEnseignantCoordonne(), 1, Integer::sum);
+
+           for (Enseignant enseignant : surveillance.getEnseignantSurveillanceList()) {
+               teacherSupervisionCount.merge(enseignant, 1, Integer::sum);
+           }
+       }}
+		 System.out.print("------------------");
+		 for (Map.Entry<Enseignant, Integer> entry : teacherSupervisionCount.entrySet()) {
+		        if (entry.getValue() >= 3) {
+		        	listEliminatedGroupes.add(entry.getKey().getGroupe());
+		        }
+		        System.out.print((entry.getKey()).getFirstName()+","+entry.getValue()+"\n");
+		    }
 		listAllGroupes.removeAll(listEliminatedGroupes);
 		return listAllGroupes;
 	}
